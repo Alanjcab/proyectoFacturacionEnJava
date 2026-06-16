@@ -151,6 +151,25 @@ public class vistaProveedor extends JFrame{
                 }
             }
         });
+
+        tablaProveedores.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent e) {
+                int fila = tablaProveedores.getSelectedRow();
+                if (fila >= 0) {
+                    txtIdProveedor.setText(tablaProveedores.getValueAt(fila, 0).toString());
+                    txtNombreProveedor.setText(tablaProveedores.getValueAt(fila, 1).toString());
+                    txtCuitProveedor.setText(tablaProveedores.getValueAt(fila, 2).toString());
+                    txtEmailProveedor.setText(tablaProveedores.getValueAt(fila, 3).toString());
+
+                    txtBuscarPorCuit.setText("");
+
+                    btnActualizarProveedor.setEnabled(true);
+                    btnHabilitarProveedor.setEnabled(false);
+                    btnDeshabilitarProveedor.setEnabled(true);
+                }
+            }
+        });
     }
     //cargo los proveedores
     private void cargarTablaProveedores() {
