@@ -28,6 +28,11 @@ public class vistaUsuario extends JFrame{
     private JTable tablaUsuarios;
     private JButton btnBuscarPorDni;
     private JTextField txtBuscarPorDni;
+    private JPanel panelBotonesVistas;
+    private JPanel panelDatos;
+    private JPanel panelBusqueda;
+    private JPanel panelTabla;
+    private JPanel panelAcciones;
 
     public vistaUsuario() {
         setContentPane(panelUsuario);

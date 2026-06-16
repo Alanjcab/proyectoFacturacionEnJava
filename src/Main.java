@@ -1,8 +1,8 @@
-import Vistas.vistaProveedor;
+import Vistas.vistaProducto;
 
 public class Main {
     public static void main(String[] args) {
-        vistaProveedor login = new vistaProveedor();
+        vistaProducto login = new vistaProducto();
         login.setVisible(true);
     }
 }
