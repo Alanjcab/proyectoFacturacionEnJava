@@ -10,6 +10,7 @@ public class vistaLogin extends JFrame  {
     private JTextField txtUsuarioMail;
     private JTextField txtPassword;
     private JButton btnIngresar;
+    private JPanel panelLogin;
 
     public vistaLogin() {
         setContentPane(panelPrincipal);
