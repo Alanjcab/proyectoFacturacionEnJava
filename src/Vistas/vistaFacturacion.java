@@ -133,25 +133,34 @@ public class vistaFacturacion extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (idClienteSeleccionado == 0) {
-                    JOptionPane.showMessageDialog(null, "primero buscá un cliente");
+                    JOptionPane.showMessageDialog(null, "Primero buscá un cliente");
                     return;
                 }
                 if (idProductoSeleccionado == 0) {
-                    JOptionPane.showMessageDialog(null, "primero buscá un producto");
+                    JOptionPane.showMessageDialog(null, "Primero buscá un producto");
                     return;
                 }
-                int cantidad = Integer.parseInt(txtCantidad.getText());
+                if (txtCantidad.getText().trim().isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Ingresá una cantidad");
+                    return;
+                }
+                int cantidad;
+                try {
+                    cantidad = Integer.parseInt(txtCantidad.getText());
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(null, "La cantidad debe ser un número");
+                    return;
+                }
                 double descuentoProducto = 0;
-
-                if (!txtDescuentoProducto.getText().isEmpty()) {
+                if (!txtDescuentoProducto.getText().trim().isEmpty()) {
                     descuentoProducto = Double.parseDouble(txtDescuentoProducto.getText());
                 }
                 if (cantidad <= 0) {
-                    JOptionPane.showMessageDialog(null, "la cantidad debe ser mayor a 0");
+                    JOptionPane.showMessageDialog(null, "La cantidad debe ser mayor a 0");
                     return;
                 }
                 if (cantidad > stockProductoSeleccionado) {
-                    JOptionPane.showMessageDialog(null, "no hay stock suficiente");
+                    JOptionPane.showMessageDialog(null, "No hay stock suficiente");
                     return;
                 }
 
