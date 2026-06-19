@@ -4,6 +4,8 @@ import Modelo.Usuarios;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import Modelo.SesionUsuario;
+
 
 public class vistaLogin extends JFrame  {
     private JPanel panelPrincipal;
@@ -26,7 +28,7 @@ public class vistaLogin extends JFrame  {
 
                 Usuarios usuarios = usuarioMet.login(email, pass);
                 if (usuarios != null) {
-                    JOptionPane.showMessageDialog(null,"Bienvenido " + usuarios.getNombre());
+                    SesionUsuario.setRol(usuarios.getRol());
                     String rol = usuarios.getRol();
                     if (rol.equalsIgnoreCase("admin")) {
                         vistaUsuario vista = new vistaUsuario();

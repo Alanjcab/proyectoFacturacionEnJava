@@ -4,12 +4,12 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.table.DefaultTableModel;
-import Modelo.Cliente;
-import Modelo.Producto;
+
+import Modelo.*;
+
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import Modelo.Facturacion;
-import Modelo.DetalleFactura;
+
 import Metodos.FacturacionMet;
 import Metodos.ClienteMet;
 import Metodos.ProductoMet;
@@ -75,6 +75,7 @@ public class vistaFacturacion extends JFrame{
         modelo.addColumn("Subtotal");
 
         tablaDetalleCompra.setModel(modelo);
+        aplicarPermisosPorRol();
         btnBuscarCliente.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -266,6 +267,23 @@ public class vistaFacturacion extends JFrame{
                 recalcularTotales();
             }
         });
+        //botones a las vistas
+        btnVistaCliente.addActionListener(e -> {
+            new vistaCliente().setVisible(true);
+            dispose();
+        });
+        btnVistaProducto.addActionListener(e -> {
+            new vistaProducto().setVisible(true);
+            dispose();
+        });
+        btnVistaProveedor.addActionListener(e -> {
+            new vistaProveedor().setVisible(true);
+            dispose();
+        });
+        btnVistaRegistrar.addActionListener(e -> {
+            new vistaUsuario().setVisible(true);
+            dispose();
+        });
     }
     //recalculo la tabla
     private void recalcularTotales() {
@@ -316,5 +334,25 @@ public class vistaFacturacion extends JFrame{
         txtDescuentoTotal.setText("");
         lbSubtotal.setText("0");
         lbTotal.setText("0");
+    }
+    //metodo para los botones de las vistas
+    private void aplicarPermisosPorRol() {
+        String rol = SesionUsuario.getRol();
+        if (rol.equalsIgnoreCase("admin")) {
+            btnVistaCliente.setEnabled(true);
+            btnVistaProducto.setEnabled(true);
+            btnVistaProveedor.setEnabled(true);
+            btnVistaRegistrar.setEnabled(true);
+        } else if (rol.equalsIgnoreCase("cajero")) {
+            btnVistaCliente.setEnabled(true);
+            btnVistaProducto.setEnabled(true);
+            btnVistaProveedor.setEnabled(false);
+            btnVistaRegistrar.setEnabled(false);
+        } else if (rol.equalsIgnoreCase("deposito")) {
+            btnVistaCliente.setEnabled(false);
+            btnVistaProducto.setEnabled(true);
+            btnVistaProveedor.setEnabled(true);
+            btnVistaRegistrar.setEnabled(false);
+        }
     }
 }

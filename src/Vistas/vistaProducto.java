@@ -4,6 +4,8 @@ import javax.swing.table.DefaultTableModel;
 import Metodos.ProveedorMet;
 import Metodos.ProductoMet;
 import Modelo.Producto;
+import Modelo.SesionUsuario;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
@@ -14,7 +16,7 @@ public class vistaProducto extends JFrame {
     private JPanel panelAcciones;
     private JPanel panelBusqueda;
     private JPanel panelTabla;
-    private JButton btnVistaUsuario;
+    private JButton btnVistaRegistrar;
     private JButton btnVistaCliente;
     private JButton btnVistaProveedor;
     private JButton btnVistaFacturacion;
@@ -63,6 +65,7 @@ public class vistaProducto extends JFrame {
         tablaProducto.setModel(modelo);
         cargarComboProveedores();
         cargarTablaProductos();
+        aplicarPermisosPorRol();
         btnRegistrarProducto.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -194,6 +197,23 @@ public class vistaProducto extends JFrame {
                 }
             }
         });
+        //botones a las vistas
+        btnVistaCliente.addActionListener(e -> {
+            new vistaCliente().setVisible(true);
+            dispose();
+        });
+        btnVistaRegistrar.addActionListener(e -> {
+            new vistaUsuario().setVisible(true);
+            dispose();
+        });
+        btnVistaProveedor.addActionListener(e -> {
+            new vistaProveedor().setVisible(true);
+            dispose();
+        });
+        btnVistaFacturacion.addActionListener(e -> {
+            new vistaFacturacion().setVisible(true);
+            dispose();
+        });
     }
     //cargo los proveedore en el combobox
     private void cargarComboProveedores() {
@@ -245,6 +265,26 @@ public class vistaProducto extends JFrame {
             }
         } catch (Exception e) {
             System.out.println("error al cargar tabla productos: " + e.getMessage());
+        }
+    }
+    //metodo para los botones de las vistas
+    private void aplicarPermisosPorRol() {
+        String rol = SesionUsuario.getRol();
+        if (rol.equalsIgnoreCase("admin")) {
+            btnVistaCliente.setEnabled(true);
+            btnVistaFacturacion.setEnabled(true);
+            btnVistaProveedor.setEnabled(true);
+            btnVistaRegistrar.setEnabled(true);
+        } else if (rol.equalsIgnoreCase("cajero")) {
+            btnVistaCliente.setEnabled(true);
+            btnVistaFacturacion.setEnabled(true);
+            btnVistaProveedor.setEnabled(false);
+            btnVistaRegistrar.setEnabled(false);
+        } else if (rol.equalsIgnoreCase("deposito")) {
+            btnVistaCliente.setEnabled(false);
+            btnVistaFacturacion.setEnabled(false);
+            btnVistaProveedor.setEnabled(true);
+            btnVistaRegistrar.setEnabled(false);
         }
     }
 }

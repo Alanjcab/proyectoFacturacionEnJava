@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.*;
 import java.sql.ResultSet;
+import Modelo.SesionUsuario;
 
 public class vistaUsuario extends JFrame{
     private JPanel panelUsuario;
@@ -17,10 +18,10 @@ public class vistaUsuario extends JFrame{
     private JTextField txtEmail;
     private JTextField txtPassword;
     private JComboBox comboRoles;
-    private JButton btnCliente;
-    private JButton btnProducto;
-    private JButton btnProveedor;
-    private JButton btnFacturacion;
+    private JButton btnVistaCliente;
+    private JButton btnVistaProducto;
+    private JButton btnVistaProveedor;
+    private JButton btnVistaFacturacion;
     private JButton btnRegistrarUsuario;
     private JButton btnActualizarUsuario;
     private JButton btnHabilitarUsuario;
@@ -64,7 +65,7 @@ public class vistaUsuario extends JFrame{
         modelo.addColumn("Rol");
         modelo.addColumn("Activo");
         tablaUsuarios.setModel(modelo);
-
+        aplicarPermisosPorRol();
         btnRegistrarUsuario.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -192,6 +193,23 @@ public class vistaUsuario extends JFrame{
                 }
             }
         });
+        //botones a las vistas
+        btnVistaCliente.addActionListener(e -> {
+            new vistaCliente().setVisible(true);
+            dispose();
+        });
+        btnVistaProducto.addActionListener(e -> {
+            new vistaProducto().setVisible(true);
+            dispose();
+        });
+        btnVistaProveedor.addActionListener(e -> {
+            new vistaProveedor().setVisible(true);
+            dispose();
+        });
+        btnVistaFacturacion.addActionListener(e -> {
+            new vistaFacturacion().setVisible(true);
+            dispose();
+        });
     }
     //metodo paraa limpiar los campos cuando termino de registrar el usuario
     private void limpiarCampos() {
@@ -225,6 +243,26 @@ public class vistaUsuario extends JFrame{
             }
         } catch (Exception e) {
             System.out.println("Error al cargar tabla: " + e.getMessage());
+        }
+    }
+    //metodo para los botones de las vistas
+    private void aplicarPermisosPorRol() {
+        String rol = SesionUsuario.getRol();
+        if (rol.equalsIgnoreCase("admin")) {
+            btnVistaCliente.setEnabled(true);
+            btnVistaProducto.setEnabled(true);
+            btnVistaProveedor.setEnabled(true);
+            btnVistaFacturacion.setEnabled(true);
+        } else if (rol.equalsIgnoreCase("cajero")) {
+            btnVistaCliente.setEnabled(true);
+            btnVistaProducto.setEnabled(true);
+            btnVistaProveedor.setEnabled(false);
+            btnVistaFacturacion.setEnabled(true);
+        } else if (rol.equalsIgnoreCase("deposito")) {
+            btnVistaCliente.setEnabled(false);
+            btnVistaProducto.setEnabled(true);
+            btnVistaProveedor.setEnabled(true);
+            btnVistaFacturacion.setEnabled(false);
         }
     }
 }

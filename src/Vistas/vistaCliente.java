@@ -1,12 +1,14 @@
 package Vistas;
 import Metodos.ClienteMet;
 import Modelo.Cliente;
+import Modelo.SesionUsuario;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
+
 
 public class vistaCliente extends JFrame{
     private JPanel panelCliente;
@@ -61,6 +63,8 @@ public class vistaCliente extends JFrame{
         tablaClientes.setModel(modelo);
 
         cargarTablaClientes();
+
+        aplicarPermisosPorRol();
 
         btnRegistrarCliente.addActionListener(new ActionListener() {
             @Override
@@ -177,6 +181,23 @@ public class vistaCliente extends JFrame{
                 }
             }
         });
+        //botones a las vistas
+        btnVistaRegistrar.addActionListener(e -> {
+            new vistaUsuario().setVisible(true);
+            dispose();
+        });
+        btnVistaProducto.addActionListener(e -> {
+            new vistaProducto().setVisible(true);
+            dispose();
+        });
+        btnVistaProveedor.addActionListener(e -> {
+            new vistaProveedor().setVisible(true);
+            dispose();
+        });
+        btnVistaFacturacion.addActionListener(e -> {
+            new vistaFacturacion().setVisible(true);
+            dispose();
+        });
     }
 
     private void cargarTablaClientes() {
@@ -217,5 +238,25 @@ public class vistaCliente extends JFrame{
         btnActualizarCliente.setEnabled(false);
         btnHabilitarCliente.setEnabled(false);
         btnDeshabilitarCliente.setEnabled(false);
+    }
+    //metodo para los botones de las vistas
+    private void aplicarPermisosPorRol() {
+        String rol = SesionUsuario.getRol();
+        if (rol.equalsIgnoreCase("admin")) {
+            btnVistaRegistrar.setEnabled(true);
+            btnVistaProducto.setEnabled(true);
+            btnVistaProveedor.setEnabled(true);
+            btnVistaFacturacion.setEnabled(true);
+        } else if (rol.equalsIgnoreCase("cajero")) {
+            btnVistaRegistrar.setEnabled(false);
+            btnVistaProducto.setEnabled(true);
+            btnVistaProveedor.setEnabled(false);
+            btnVistaFacturacion.setEnabled(true);
+        } else if (rol.equalsIgnoreCase("deposito")) {
+            btnVistaRegistrar.setEnabled(false);
+            btnVistaProducto.setEnabled(true);
+            btnVistaProveedor.setEnabled(true);
+            btnVistaFacturacion.setEnabled(false);
+        }
     }
 }

@@ -6,7 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
+
+import Modelo.SesionUsuario;
 
 public class vistaProveedor extends JFrame{
     private JPanel panelProveedor;
@@ -16,7 +17,7 @@ public class vistaProveedor extends JFrame{
     private JPanel panelBusqueda;
     private JPanel panelTabla;
     private JTable tablaProveedores;
-    private JButton btnVistaUsuario;
+    private JButton btnVistaRegistrar;
     private JButton btnVistaCliente;
     private JButton btnVistaProducto;
     private JButton btnVistaFacturacion;
@@ -55,7 +56,7 @@ public class vistaProveedor extends JFrame{
         modelo.addColumn("Email");
         modelo.addColumn("Activo");
         tablaProveedores.setModel(modelo);
-
+        aplicarPermisosPorRol();
         cargarTablaProveedores();
         btnRegistrarProveedor.addActionListener(new ActionListener() {
             @Override
@@ -170,6 +171,23 @@ public class vistaProveedor extends JFrame{
                 }
             }
         });
+        //botones a las vistas
+        btnVistaCliente.addActionListener(e -> {
+            new vistaCliente().setVisible(true);
+            dispose();
+        });
+        btnVistaRegistrar.addActionListener(e -> {
+            new vistaUsuario().setVisible(true);
+            dispose();
+        });
+        btnVistaFacturacion.addActionListener(e -> {
+            new vistaFacturacion().setVisible(true);
+            dispose();
+        });
+        btnVistaProducto.addActionListener(e -> {
+            new vistaProducto().setVisible(true);
+            dispose();
+        });
     }
     //cargo los proveedores
     private void cargarTablaProveedores() {
@@ -200,5 +218,25 @@ public class vistaProveedor extends JFrame{
         btnActualizarProveedor.setEnabled(false);
         btnHabilitarProveedor.setEnabled(false);
         btnDeshabilitarProveedor.setEnabled(false);
+    }
+    //metodo para los botones de las vistas
+    private void aplicarPermisosPorRol() {
+        String rol = SesionUsuario.getRol();
+        if (rol.equalsIgnoreCase("admin")) {
+            btnVistaRegistrar.setEnabled(true);
+            btnVistaCliente.setEnabled(true);
+            btnVistaFacturacion.setEnabled(true);
+            btnVistaRegistrar.setEnabled(true);
+        } else if (rol.equalsIgnoreCase("cajero")) {
+            btnVistaRegistrar.setEnabled(false);
+            btnVistaCliente.setEnabled(true);
+            btnVistaFacturacion.setEnabled(true);
+            btnVistaRegistrar.setEnabled(false);
+        } else if (rol.equalsIgnoreCase("deposito")) {
+            btnVistaRegistrar.setEnabled(false);
+            btnVistaCliente.setEnabled(false);
+            btnVistaFacturacion.setEnabled(false);
+            btnVistaRegistrar.setEnabled(false);
+        }
     }
 }

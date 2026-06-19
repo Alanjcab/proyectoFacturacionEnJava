@@ -16,7 +16,7 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="c2868" class="javax.swing.JButton" binding="btnCliente">
+          <component id="c2868" class="javax.swing.JButton" binding="btnVistaCliente">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -24,7 +24,7 @@
               <text value="CLIENTE"/>
             </properties>
           </component>
-          <component id="a586" class="javax.swing.JButton" binding="btnProducto">
+          <component id="a586" class="javax.swing.JButton" binding="btnVistaProducto">
             <constraints>
               <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -32,7 +32,7 @@
               <text value="PRODUCTO"/>
             </properties>
           </component>
-          <component id="81bc2" class="javax.swing.JButton" binding="btnProveedor">
+          <component id="81bc2" class="javax.swing.JButton" binding="btnVistaProveedor">
             <constraints>
               <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -40,7 +40,7 @@
               <text value="PROVEEDOR"/>
             </properties>
           </component>
-          <component id="b068b" class="javax.swing.JButton" binding="btnFacturacion">
+          <component id="b068b" class="javax.swing.JButton" binding="btnVistaFacturacion">
             <constraints>
               <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
