@@ -1,10 +1,9 @@
-import Vistas.vistaCliente;
-import Vistas.vistaLogin;
+import Vistas.vistaFacturacion;
 
 public class Main {
     public static void main(String[] args) {
-        vistaLogin login = new vistaLogin();
-        login.setVisible(true);
+        vistaFacturacion facturacion = new vistaFacturacion();
+        facturacion.setVisible(true);
     }
 }
 
