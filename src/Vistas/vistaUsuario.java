@@ -49,6 +49,7 @@ public class vistaUsuario extends JFrame{
         //deshabilito los botones cuanod no tengo usuario sellecionado
         btnHabilitarUsuario.setEnabled(false);
         btnDeshabilitarUsuario.setEnabled(false);
+        btnActualizarUsuario.setEnabled(false);
         //agrego campos a la tabla de usuarios
         DefaultTableModel modelo = new DefaultTableModel() {
             @Override
@@ -111,6 +112,7 @@ public class vistaUsuario extends JFrame{
 
                     btnHabilitarUsuario.setEnabled(false);
                     btnDeshabilitarUsuario.setEnabled(true);
+                    btnActualizarUsuario.setEnabled(true);
                 }
             }
         });
@@ -122,6 +124,7 @@ public class vistaUsuario extends JFrame{
                 Usuarios usuario = usuarioMet.buscarUsuarioPorDni(dni);
 
                 if (usuario != null) {
+                    btnActualizarUsuario.setEnabled(true);
                     txtId.setText(String.valueOf(usuario.getId()));
                     txtNombre.setText(usuario.getNombre());
                     txtApellido.setText(usuario.getApellido());
@@ -221,6 +224,9 @@ public class vistaUsuario extends JFrame{
         txtEmail.setText("");
         txtPassword.setText("");
         comboRoles.setSelectedIndex(0);
+        btnActualizarUsuario.setEnabled(false);
+        btnHabilitarUsuario.setEnabled(false);
+        btnDeshabilitarUsuario.setEnabled(false);
     }
     //cargo los usuarios activos
     private void cargarTablaUsuarios() {

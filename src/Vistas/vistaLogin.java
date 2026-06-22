@@ -22,11 +22,21 @@ public class vistaLogin extends JFrame  {
         btnIngresar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                UsuarioMet usuarioMet = new UsuarioMet();
-                String email = txtUsuarioMail.getText();
-                String pass = txtPassword.getText();
+                String email = txtUsuarioMail.getText().trim();
+                String pass = txtPassword.getText().trim();
 
+                if (email.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "ingrese el email");
+                    return;
+                }
+                if (pass.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "ingrese la contraseña");
+                    return;
+                }
+
+                UsuarioMet usuarioMet = new UsuarioMet();
                 Usuarios usuarios = usuarioMet.login(email, pass);
+
                 if (usuarios != null) {
                     SesionUsuario.setRol(usuarios.getRol());
                     String rol = usuarios.getRol();
@@ -42,9 +52,11 @@ public class vistaLogin extends JFrame  {
                         vistaProveedor vista = new vistaProveedor();
                         vista.setVisible(true);
                         dispose();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "no se encontro el rol");
                     }
                 } else {
-                    JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos");
+                    JOptionPane.showMessageDialog(null, "usuario o contraseña incorrecta");
                 }
             }
         });

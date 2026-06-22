@@ -79,6 +79,10 @@ public class vistaFacturacion extends JFrame{
         btnBuscarCliente.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if (txtDniCliente.getText().trim().isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "ingresá el dni del cliente");
+                    return;
+                }
                 String dni = txtDniCliente.getText();
                 ClienteMet clienteMet = new ClienteMet();
                 Cliente cliente = clienteMet.buscarClientePorDni(dni);
@@ -101,6 +105,10 @@ public class vistaFacturacion extends JFrame{
         btnBuscarProducto.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if (txtCodigoProducto.getText().trim().isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "ingresá el código del producto");
+                    return;
+                }
                 String codigo = txtCodigoProducto.getText();
                 ProductoMet productoMet = new ProductoMet();
                 Producto producto = productoMet.buscarProductoPorCodigo(codigo);
@@ -152,11 +160,21 @@ public class vistaFacturacion extends JFrame{
                     return;
                 }
                 double descuentoProducto = 0;
+
                 if (!txtDescuentoProducto.getText().trim().isEmpty()) {
-                    descuentoProducto = Double.parseDouble(txtDescuentoProducto.getText());
+                    try {
+                        descuentoProducto = Double.parseDouble(txtDescuentoProducto.getText().trim());
+                    } catch (NumberFormatException ex) {
+                        JOptionPane.showMessageDialog(null, "El descuento tiene que ser un número");
+                        return;
+                    }
+                }
+                if (descuentoProducto < 0 || descuentoProducto > 100) {
+                    JOptionPane.showMessageDialog(null, "el descuento tien que estar entre 0 y 100");
+                    return;
                 }
                 if (cantidad <= 0) {
-                    JOptionPane.showMessageDialog(null, "La cantidad debe ser mayor a 0");
+                    JOptionPane.showMessageDialog(null, "La cantidad tiene que ser mayor a 0");
                     return;
                 }
                 if (cantidad > stockProductoSeleccionado) {
@@ -228,7 +246,16 @@ public class vistaFacturacion extends JFrame{
                 double descuentoGeneral = 0;
 
                 if (!txtDescuentoTotal.getText().trim().isEmpty()) {
-                    descuentoGeneral = Double.parseDouble(txtDescuentoTotal.getText());
+                    try {
+                        descuentoGeneral = Double.parseDouble(txtDescuentoTotal.getText().trim());
+                    } catch (NumberFormatException ex) {
+                        JOptionPane.showMessageDialog(null, "El descuento tiene que ser número");
+                        return;
+                    }
+                }
+                if (descuentoGeneral < 0 || descuentoGeneral > 100) {
+                    JOptionPane.showMessageDialog(null, "El descuento tiene que ser de 0 a 100");
+                    return;
                 }
 
                 Facturacion factura = new Facturacion(idClienteSeleccionado, total, subtotal, descuentoGeneral);
@@ -303,7 +330,16 @@ public class vistaFacturacion extends JFrame{
         double descuentoGeneral = 0;
 
         if (!txtDescuentoTotal.getText().trim().isEmpty()) {
-            descuentoGeneral = Double.parseDouble(txtDescuentoTotal.getText());
+            try {
+                descuentoGeneral = Double.parseDouble(txtDescuentoTotal.getText().trim());
+            } catch (NumberFormatException e) {
+                lbTotal.setText(String.valueOf(subtotal));
+                return;
+            }
+        }
+        if (descuentoGeneral < 0 || descuentoGeneral > 100) {
+            lbTotal.setText(String.valueOf(subtotal));
+            return;
         }
         double montoDescuento = subtotal * descuentoGeneral / 100;
         double total = subtotal - montoDescuento;
